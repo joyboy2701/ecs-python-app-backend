@@ -1,14 +1,12 @@
 name: Build & Push Docker Images to ECR
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - master
 
 jobs:
   build-and-push:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     permissions:
@@ -39,6 +37,6 @@ jobs:
 
       - name: Build & Push Storage image
         run: |
-          docker build -t storage-service:latest ./storage
-          docker tag storage-service:latest 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
-          docker push 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
+           docker build -t storage-service:latest ./storage
+           docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}/storage-service:latest
+           docker push ${{ secrets.ECR_REGISTRY }}/storage-service:latest
