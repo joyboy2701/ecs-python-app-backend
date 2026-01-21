@@ -37,12 +37,7 @@ jobs:
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build & Push API image
-        run: |
-          docker build -t upload-api:latest ./api
-          docker tag upload-api:latest ${{ secrets.ECR_REGISTRY }}/upload-api:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/upload-api:latest
+        
 
       - name: Build & Push Storage image
         run: |
