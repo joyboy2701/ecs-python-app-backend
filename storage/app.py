@@ -112,5 +112,3 @@ async def get_file_info(filename: str):
         "modified": datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).isoformat()
     }
 
-
-
