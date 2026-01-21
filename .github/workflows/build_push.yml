@@ -24,10 +24,9 @@ jobs:
 
       - name: Show OIDC subject
         run: |
-           echo "Requesting token"
-           curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-           "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com"
-
+          echo "Requesting token"
+          curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+          "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com"
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v3
@@ -37,10 +36,9 @@ jobs:
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
-        
 
       - name: Build & Push Storage image
         run: |
           docker build -t storage-service:latest ./storage
-          docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}storage-service:latest
-          docker push ${{ secrets.ECR_REGISTRY }}storage-service:latest
+          docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}/storage-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/storage-service:latest
