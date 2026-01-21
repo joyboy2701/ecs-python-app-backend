@@ -40,5 +40,4 @@ jobs:
       - name: Build & Push Storage image
         run: |
           docker build -t storage-service:latest ./storage
-          docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}storage-service:latest
           docker push 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
