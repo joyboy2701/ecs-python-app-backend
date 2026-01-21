@@ -48,5 +48,5 @@ jobs:
         run: |
           docker build -t storage-service:latest ./storage
           docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}storage-service:latest
-          docker push ${{ secrets.ECR_REGISTRY }}storage-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/storage-service:latest
 
