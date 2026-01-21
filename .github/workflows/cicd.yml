@@ -1,25 +1,64 @@
-name: Run the Action
-on:
-  push:
-    branches-ignore:
-      - master
+# name: Run the Action
+# on:
+#   push:
+#     branches-ignore:
+#       - master
 
-jobs:
-  action-pull-request:
-    runs-on: ubuntu-latest
-    permissions:  # ← ADD THIS SECTION
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
+# jobs:
+#   action-pull-request:
+#     runs-on: ubuntu-latest
+#     permissions:  # ← ADD THIS SECTION
+#       contents: write
+#       pull-requests: write
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v5
+#         with:
+#           fetch-depth: 0
 
-      - name: Create pull request
-        uses: devops-infra/action-pull-request@v1.0.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Automatic pull request
-          source_branch: ${{ github.head_ref || github.ref_name }}
-          target_branch: master
+#       - name: Create pull request
+#         uses: devops-infra/action-pull-request@v1.0.2
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           title: Automatic pull request
+#           source_branch: ${{ github.head_ref || github.ref_name }}
+#           target_branch: master
+#    # ====================================
+#   # JOB 2: BUILD & PUSH TO ECR (AFTER MERGE)
+#   # ====================================
+#   build-and-push:
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-latest
+#     environment: prod
+
+#     permissions:
+#       id-token: write
+#       contents: read
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v5
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
+
+#       - name: Configure AWS credentials via OIDC
+#         uses: aws-actions/configure-aws-credentials@v3
+#         with:
+#           role-to-assume: arn:aws:iam::569023477847:role/github-actions-role
+#           aws-region: us-east-1
+
+#       - name: Login to Amazon ECR
+#         uses: aws-actions/amazon-ecr-login@v2
+
+#       - name: Build & Push API image
+#         run: |
+#           docker build -t upload-api:latest ./api
+#           docker tag upload-api:latest 569023477847.dkr.ecr.us-east-1.amazonaws.com/upload-api:latest
+#           docker push 569023477847.dkr.ecr.us-east-1.amazonaws.com/upload-api:latest
+
+#       - name: Build & Push Storage image
+#         run: |
+#           docker build -t storage-service:latest ./storage
+#           docker tag storage-service:latest 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
+#           docker push 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
