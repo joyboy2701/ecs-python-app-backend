@@ -41,3 +41,5 @@ jobs:
         run: |
           docker build -t storage-service:latest ./storage
           docker push 569023477847.dkr.ecr.us-east-1.amazonaws.com/storage-service:latest
+
+          
