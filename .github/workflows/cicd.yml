@@ -9,9 +9,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # ← ADD THIS: Get all history
+          fetch-tags: false
 
       - name: Create pull request
         uses: devops-infra/action-pull-request@v1.0.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           title: Automatic pull request
+          source_branch: ${{ github.head_ref || github.ref_name }}  # ← ADD THIS: Dynamic branch name
+          target_branch: master  # ← Make sure this is explicit
