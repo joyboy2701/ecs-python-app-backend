@@ -141,11 +141,3 @@ This forces ECS to:
 * ECR repositories must already exist
 
 ---
-
-## 👤 Author
-
-**Zubair Liaqat**
-
----
-
-This backend CI/CD pipeline pairs cleanly with the frontend pipeline, giving you a complete automated deployment strategy across services.
