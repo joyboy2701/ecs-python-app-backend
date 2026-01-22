@@ -42,11 +42,11 @@ jobs:
            docker build -t storage-service:latest ./storage
            docker tag storage-service:latest ${{ secrets.ECR_REGISTRY }}/storage-service:latest
            docker push ${{ secrets.ECR_REGISTRY }}/storage-service:latest
-           
+
       - name: Update ECS Service
         run: |
          aws ecs update-service \
-         --cluster  ${{ vars.CLUSTER }} \
-         --service  ${{ vars.SERVICE }} \
+         --cluster ${{ vars.CLUSTER }} \
+         --service ${{ vars.SERVICE }} \
          --force-new-deployment \
          --region ${{ secrets.REGION }}
